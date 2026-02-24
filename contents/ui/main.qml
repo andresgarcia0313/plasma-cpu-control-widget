@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.components 2.0 as PlasmaComponents
 import "logic/CpuReader.js" as Reader
 import "logic/CpuWriter.js" as Writer
 
@@ -47,9 +48,29 @@ Item {
         if (cmd) writeSource.connectSource(cmd)
     }
 
-    Plasmoid.compactRepresentation: CompactView {
-        temperature: root.temperature
+    Plasmoid.compactRepresentation: MouseArea {
+        implicitWidth: compactRow.implicitWidth
+        implicitHeight: compactRow.implicitHeight
         onClicked: plasmoid.expanded = !plasmoid.expanded
+
+        Row {
+            id: compactRow
+            spacing: 4
+            anchors.centerIn: parent
+
+            PlasmaCore.IconItem {
+                source: "cpu"
+                width: units.iconSizes.small
+                height: units.iconSizes.small
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            PlasmaComponents.Label {
+                text: root.temperature + "°C"
+                color: Reader.tempColor(root.temperature)
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
     }
 
     Plasmoid.fullRepresentation: FullView {

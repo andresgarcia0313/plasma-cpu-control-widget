@@ -2,7 +2,7 @@
     "KPlugin": {
         "Id": "org.kde.plasma.cpucontrol",
         "Name": "CPU Control",
-        "Description": "Control CPU performance mode",
+        "Description": "Monitor CPU temperature and control performance limit",
         "Icon": "cpu",
         "Authors": [
             {
@@ -12,9 +12,12 @@
         ],
         "Category": "System Information",
         "License": "MIT",
-        "Version": "1.0.0",
-        "Website": "https://github.com/andresgarcia0313"
+        "Version": "2.0.0",
+        "Website": "https://github.com/andresgarcia0313",
+        "ServiceTypes": ["Plasma/Applet"],
+        "FormFactors": ["panel", "desktop"],
+        "EnabledByDefault": true
     },
-    "KPackageStructure": "Plasma/Applet",
-    "X-Plasma-API-Minimum-Version": "6.0"
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml"
 }

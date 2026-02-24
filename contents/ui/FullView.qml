@@ -1,6 +1,5 @@
 import QtQuick 2.15
 import org.kde.plasma.core 2.0 as PlasmaCore
-import "components" as Components
 
 Column {
     id: root
@@ -14,7 +13,7 @@ Column {
 
     Item { width: 1; height: 4 }
 
-    Components.TemperatureDisplay {
+    TemperatureDisplay {
         temperature: root.temperature
         anchors.horizontalCenter: parent.horizontalCenter
     }
@@ -27,7 +26,7 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    Components.PerfLimiter {
+    PerfLimiter {
         currentPerf: root.currentPerf
         anchors.horizontalCenter: parent.horizontalCenter
         onPerfChangeRequested: root.perfChangeRequested(newValue)
