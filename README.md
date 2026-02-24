@@ -1,23 +1,20 @@
 # KDE Plasma CPU Control Widget
 
-Widget de KDE Plasma 6 para monitorear y controlar el rendimiento del CPU Intel desde el panel.
+Widget de KDE Plasma 6 para monitorear temperatura del CPU y controlar el límite de rendimiento desde el panel.
 
 ## Características
 
-- Temperatura del CPU en tiempo real en el panel
-- Porcentaje de rendimiento y estado del turbo boost
-- Cambio de perfil con un click:
-  - **Performance**: Máximo rendimiento (videollamadas, compilación)
-  - **Balanced**: Equilibrio rendimiento/consumo (uso general)
-  - **Power Saver**: Bajo consumo (batería, temperaturas altas)
-- Usa `powerprofilesctl` (estándar del sistema, sin sudo)
-- Colores indicadores de temperatura y estado
+- Temperatura real del CPU en tiempo real (detección dinámica de zona térmica)
+- Limitador de CPU con botones -5% / +5% (rango 10%-100%)
+- Colores dinámicos por temperatura: verde, amarillo, naranja, rojo
+- Sin duplicar funcionalidad del sistema (no cambia perfiles de energía)
+- Arquitectura modular por componentes
 
 ## Requisitos
 
 - KDE Plasma 6
 - CPU Intel con driver `intel_pstate`
-- `power-profiles-daemon` (incluido por defecto en Kubuntu)
+- Node.js (para ejecutar tests)
 
 ## Instalación
 
@@ -29,24 +26,45 @@ kquitapp6 plasmashell && kstart plasmashell
 
 Click derecho en el panel > "Add Widgets..." > Buscar "CPU Control"
 
-## Desinstalación
+## Tests
 
 ```bash
-rm -rf ~/.local/share/plasma/plasmoids/org.kde.plasma.cpucontrol
-kquitapp6 plasmashell && kstart plasmashell
+./tests/run_tests.sh
 ```
 
 ## Estructura
 
 ```
 cpu-control-plasmoid/
+├── contents/ui/
+│   ├── main.qml                  # Orquestador
+│   ├── CompactView.qml           # Vista del panel
+│   ├── FullView.qml              # Vista expandida
+│   ├── components/
+│   │   ├── TemperatureDisplay.qml
+│   │   └── PerfLimiter.qml
+│   └── logic/
+│       ├── CpuReader.js          # Lectura de sensores
+│       └── CpuWriter.js          # Escritura a intel_pstate
+├── system/
+│   ├── cpu-perf-set              # Helper script
+│   └── *.policy                  # Polkit policy
+├── tests/
+│   ├── test_CpuReader.js
+│   ├── test_CpuWriter.js
+│   └── run_tests.sh
 ├── metadata.json
 ├── metadata.desktop
-├── contents/
-│   └── ui/
-│       └── main.qml
-├── install.sh
-└── README.md
+└── install.sh
+```
+
+## Desinstalación
+
+```bash
+rm -rf ~/.local/share/plasma/plasmoids/org.kde.plasma.cpucontrol
+sudo rm -f /usr/local/bin/cpu-perf-set
+sudo rm -f /usr/share/polkit-1/actions/org.kde.plasma.cpucontrol.policy
+kquitapp6 plasmashell && kstart plasmashell
 ```
 
 ## Licencia
