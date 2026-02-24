@@ -1,0 +1,20 @@
+{
+    "KPlugin": {
+        "Id": "org.kde.plasma.cpucontrol",
+        "Name": "CPU Control",
+        "Description": "Control CPU performance mode",
+        "Icon": "cpu",
+        "Authors": [
+            {
+                "Name": "Andres Garcia",
+                "Email": "andresgarcia0313@gmail.com"
+            }
+        ],
+        "Category": "System Information",
+        "License": "MIT",
+        "Version": "1.0.0",
+        "Website": "https://github.com/andresgarcia0313"
+    },
+    "KPackageStructure": "Plasma/Applet",
+    "X-Plasma-API-Minimum-Version": "6.0"
+}
